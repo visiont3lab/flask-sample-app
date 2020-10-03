@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+  <head>
+        <title>Let's Upload Files</title>
+        <style>
+            body{
+                background-color: white;
+            }
+            h1 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .header-container {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+            }
+            .form-header-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .imgs-container {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+
+            }
+            .img-container{
+                display: flex;
+                flex-direction: column;
+                margin: 5px;
+            }
+            #form-imgs{
+                display: flex;
+                flex-flow: column nowrap
+            }
+            hr{
+                border-width: 1px;
+                border-style: dashed;
+                border-color: red;
+            }
+        </style>
+  </head>
+  <body>
+    <h1>Let's Upload Files</h1>
+    <div class="header-container">
+        <div class="form-header-container">
+            <form method="POST" action="{{ url_for('upload_files') }}" enctype="multipart/form-data">
+                <input id="file-upload" type="file" name="file[]" multiple>
+                <input id="file-submit" type="submit" value="Submit">
+            </form>
+            <form action="/realtime" method="get">
+                <input type="submit" value="Real Time Page" />
+            </form>
+        </div>
+    </div>
+    <hr>
+
+    <div class="imgs-container">    
+        {% for file in files %}
+        <div class="img-container">
+            <!--<button type="button">Remove</button> --> 
+            <form id="form-imgs"action="{{ url_for('delete', filename=file) }}" method="post">
+                <button name="btn-remove" type="submit">Remove</button>
+            </form>
+            <img src="{{ url_for('uploads', filename=file) }}" width=400>
+        </div>
+        {% endfor %}
+    </div>  
+    <!--<script>
+        document.getElementById('file-upload').onchange = function() {
+            //this.form.submit();
+            document.getElementById('file-submit').click();
+        };
+    </script>-->
+    </body>
+</html>
